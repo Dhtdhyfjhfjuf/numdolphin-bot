@@ -18,6 +18,6 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ans = ask_dolphin(update.message.text)
     await update.message.reply_text(ans)
 
-app = Application.builder().token(TELEGRAM_TOKEN).build()
+app = Application.builder().token(TELEGRAM_TOKEN).proxy_url("http://proxy.server:3128").build()
 app.add_handler(MessageHandler(filters.TEXT, reply))
 app.run_polling()
