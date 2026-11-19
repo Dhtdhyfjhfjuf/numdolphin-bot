@@ -4,13 +4,14 @@ from telegram.ext import Application, MessageHandler, filters, ContextTypes
 import requests
 
 TELEGRAM_TOKEN = os.getenv("BOT_TOKEN")
-API_KEY = os.getenv("OPENROUTER_KEY")
+API_KEY = os.getenv("OPENROUTER_KEY")  # هنسيبه بنفس الاسم عشان الكوماند اللي انت كتبته يشتغل
 
 def ask_dolphin(text):
-    r = requests.post("https://openrouter.ai/api/v1/chat/completions",
+    r = requests.post("https://api.groq.com/openai/v1/chat/completions",
         headers={"Authorization": f"Bearer {API_KEY}"},
-        json={"model": "cognitivecomputations/dolphin-mistral-24b-venice-edition",
+        json={"model": "llama-3.3-70b-versatile",
               "messages": [{"role": "user", "content": text}]})
+    print(r.text) # عشان لو حصل خطأ يبان
     return r.json()["choices"][0]["message"]["content"]
 
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
